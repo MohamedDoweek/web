@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EmpowerWork</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url("disabled.png") center center/cover no-repeat;
+      color: white; height: 100vh; position: relative;
+    }
+
+    /* Overlay */
+    body::before {
+      content: ""; position: absolute; inset: 0;
+      background: rgba(0, 0, 0, 0.45); z-index: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(0, 0, 0, 0.7);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 30px; position: relative; z-index: 1;
+    }
+    .navbar a {
+      color: #00b4d8; text-decoration: none; margin: 0 15px;
+      font-weight: 600; font-size: 16px; transition: color 0.3s ease;
+    }
+    .navbar a:hover { color: #00b4d8; }
+    .navbar img { height: 50px; border-radius: 8px; }
+
+    /* Hero */
+    .container {
+      position: relative; z-index: 1; max-width: 1100px;
+      padding: 80px 30px 30px;
+    }
+    .container h1 { font-size: 2.6rem; font-weight: 700; line-height: 1.3; margin-bottom: 16px; }
+    .container p { font-size: 1.1rem; font-weight: 400; margin-bottom: 8px; }
+    .btn {
+      display: inline-block; padding: 12px 25px; text-decoration: none;
+      background-color: #00b4d8; color: white; border-radius: 30px;
+      font-weight: 600; font-size: 1rem; margin-top: 18px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn:hover { background-color: #0077b6; transform: translateY(-2px); }
+
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; align-items: flex-start; }
+      .navbar a { margin: 8px 0; }
+      .container h1 { font-size: 2rem; }
+    }
+    :root{
+  --brand:#00b4d8;
+  --brand-dark:#0077b6;
+  --ink:#0f172a;
+}
+
+/* --- Modern cards grid --- */
+.more-pages{
+  position: relative; z-index: 1; max-width: 1100px;
+  padding: 24px 30px 90px; margin: 0 auto;
+}
+.more-pages h2{
+  font-size: 1.9rem; font-weight: 700; margin: 8px 0 18px;
+}
+.grid{
+  display: grid; gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+/* Base card */
+.card{
+  position: relative; isolation: isolate;
+  border-radius: 16px; padding: 18px 18px 20px;
+  background: rgba(255,255,255,0.92);
+  color: var(--ink);
+  border: 1px solid rgba(15,23,42,.08);
+  box-shadow: 0 10px 26px rgba(0,0,0,.22);
+  transform: translateY(10px);
+  opacity: 0;
+  animation: fadeUp .6s ease forwards;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+/* Staggered appear */
+.card:nth-child(1){animation-delay: .05s}
+.card:nth-child(2){animation-delay: .10s}
+.card:nth-child(3){animation-delay: .15s}
+.card:nth-child(4){animation-delay: .20s}
+.card:nth-child(5){animation-delay: .25s}
+.card:nth-child(6){animation-delay: .30s}
+.card:nth-child(7){animation-delay: .35s}
+.card:nth-child(8){animation-delay: .40s}
+.card:nth-child(9){animation-delay: .45s}
+.card:nth-child(10){animation-delay: .50s}
+
+/* Animated gradient border (on hover) */
+.card::before{
+  content:"";
+  position:absolute; inset:-1px; z-index:-1; border-radius:18px;
+  background: linear-gradient(135deg, var(--brand), #6ee7ff, var(--brand-dark));
+  opacity:0; transition:opacity .25s ease;
+  filter: blur(0.5px);
+}
+.card:hover::before{ opacity:1 }
+
+/* Hover lift + subtle tilt */
+.card:hover{
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 16px 40px rgba(0,0,0,.30);
+}
+
+/* Title link with arrow */
+.card .title{
+  display:flex; align-items:center; gap:10px;
+  color: var(--brand-dark); text-decoration:none;
+  font-weight: 700; font-size: 1.05rem;
+}
+.card .title .arrow{
+  width: 18px; height: 18px; display:inline-block;
+  transform: translateX(0); transition: transform .2s ease;
+}
+.card:hover .title .arrow{ transform: translateX(4px) }
+
+/* Description */
+.card p{
+  color:#475569; font-size:.95rem; line-height:1.5;
+  margin-top: 6px;
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce){
+  .card, .card::before, .card .title .arrow{ transition:none; animation:none; transform:none; opacity:1}
+}
+
+/* Fade-up keyframes */
+@keyframes fadeUp{
+  from{opacity:0; transform: translateY(12px)}
+  to{opacity:1; transform: translateY(0)}
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div>
+      <a href="index.html">Home</a>
+      <a href="travels_catalog.php">Destinations</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <!-- New placeholder links (can move into a footer later) -->
+      <a href="services.html">Services</a>
+      <a href="candidates.html">For Candidates</a>
+      <a href="employers.html">For Employers</a>
+      <a href="ai-platform.html">AI Platform</a>
+    </div>
+    <img src="Logo.png" alt="Company Logo">
+  </div>
+
+  <div class="container">
+    <h1>EmpowerWork: <span style="color:#00b4d8;">Bridging the Employment Gap for People with Disabilities</span></h1>
+    <p>Explore opportunities and make meaningful connections.</p>
+    <p>One of the best companies supporting accessibility and empowerment.</p>
+    <a href="login.php" class="btn">Book Now</a>
+  </div>
+
+  
+
+</body>
+</html>

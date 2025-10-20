@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot • EmpowerWork</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --brand:#00b4d8;
+      --brand-dark:#0077b6;
+      --ink:#0f172a;
+      --muted:#475569;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Poppins',sans-serif;
+      color:white; min-height:100dvh; position:relative;
+      background:url('disabled.png') center/cover no-repeat fixed;
+    }
+    body::before{
+      content:""; position:fixed; inset:0; z-index:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.45));
+    }
+
+    /* NAVBAR */
+    .navbar{
+      position:sticky; top:0; z-index:5;
+      background:rgba(0,0,0,.6);
+      backdrop-filter:saturate(140%) blur(8px);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 24px; border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .navbar a{
+      color:#00b4d8; text-decoration:none; font-weight:600; margin:0 12px;
+      transition:color .25s ease;
+    }
+    .navbar a:hover{ color:#8be9ff }
+    .navbar img{ height:46px; border-radius:8px }
+
+    /* PAGE WRAP */
+    .wrap{ position:relative; z-index:1; max-width:1100px; margin:28px auto 100px; padding:0 20px; }
+    .hero{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; }
+    .hero h1{ font-size:clamp(1.6rem,1.2rem + 1.8vw,2.4rem); font-weight:700 }
+    .hero p{ opacity:.95 }
+
+    /* CHAT CARD */
+    .card{
+      margin-top:18px;
+      background:#ffffff; color:var(--ink);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:16px; overflow:hidden;
+      box-shadow:0 12px 30px rgba(0,0,0,.28);
+    }
+    .card .head{
+      padding:14px 18px;
+      background:linear-gradient(135deg, rgba(0,180,216,.12), rgba(0,119,182,.12));
+      border-bottom:1px solid rgba(15,23,42,.08);
+      font-weight:700; display:flex; justify-content:space-between; align-items:center;
+    }
+    .status-dot{
+      width:10px;height:10px;border-radius:50%; background:#10b981; display:inline-block; margin-left:8px;
+      box-shadow:0 0 0 4px rgba(16,185,129,.15);
+    }
+
+    .chat{
+      display:grid; grid-template-rows: 1fr auto; height:min(70vh, 720px);
+    }
+
+    /* MESSAGES */
+    .messages{
+      padding:18px; overflow:auto; background:#f8fafc;
+    }
+    .msg{
+      max-width:75%; padding:12px 14px; margin:8px 0; border-radius:14px; line-height:1.45;
+      box-shadow:0 2px 6px rgba(0,0,0,.06);
+      animation:fadeIn .2s ease;
+      word-wrap:break-word;
+    }
+    .msg.user{
+      margin-left:auto; background:#e0f7ff; color:#0b2a33; border:1px solid rgba(0,119,182,.2);
+    }
+    .msg.bot{
+      background:#ffffff; border:1px solid rgba(15,23,42,.08); color:#0f172a;
+    }
+    .meta{ font-size:.8rem; color:var(--muted); margin-top:6px }
+
+    /* TYPING INDICATOR */
+    .typing{
+      display:flex; align-items:center; gap:6px; margin:6px 0 0 0;
+    }
+    .dot{
+      width:6px;height:6px;border-radius:50%; background:#94a3b8;
+      animation:bounce 1s infinite ease-in-out;
+    }
+    .dot:nth-child(2){ animation-delay:.15s }
+    .dot:nth-child(3){ animation-delay:.3s }
+
+    /* INPUT */
+    .composer{
+      display:flex; gap:10px; align-items:center;
+      padding:12px; border-top:1px solid rgba(15,23,42,.08); background:#fff;
+    }
+    .composer textarea{
+      flex:1; resize:none; min-height:44px; max-height:140px; padding:10px 12px;
+      border:1px solid rgba(15,23,42,.15); border-radius:12px; font-family:inherit;
+      outline:none; transition:border-color .2s ease, box-shadow .2s ease;
+    }
+    .composer textarea:focus{
+      border-color:var(--brand); box-shadow:0 0 0 3px rgba(0,180,216,.15);
+    }
+    .send{
+      padding:10px 16px; border:none; border-radius:12px; background:var(--brand); color:#fff; font-weight:700; cursor:pointer;
+      transition:background .25s ease, transform .2s ease;
+    }
+    .send:hover{ background:var(--brand-dark); transform:translateY(-2px) }
+    .hint{ font-size:.85rem; color:var(--muted); margin-left:8px }
+
+    @keyframes fadeIn{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+    @keyframes bounce{
+      0%,80%,100%{ transform:translateY(0); opacity:.5 }
+      40%{ transform:translateY(-4px); opacity:1 }
+    }
+
+    .spacer{height:80px}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <div class="navbar">
+    <div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="services.html">Services</a>
+      <a href="ai-platform.html">AI Platform</a>
+    </div>
+    <img src="Logo.png" alt="EmpowerWork Logo">
+  </div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <h1>EmpowerWork Chatbot</h1>
+        <p>Your assistant for accessibility, jobs, and platform help.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="head">
+        <span>Assistant <span class="status-dot" title="Online"></span></span>
+        <small style="color:#0f172a;opacity:.7">Shift+Enter = newline</small>
+      </div>
+
+      <div class="chat">
+        <!-- Messages -->
+        <div id="messages" class="messages" aria-live="polite">
+          <div class="msg bot">
+            Hi! I’m here to help with opportunities, accessibility tools, and site navigation. Ask me anything.
+            <div class="meta">Assistant • now</div>
+          </div>
+        </div>
+
+        <!-- Composer -->
+        <div class="composer">
+          <textarea id="input" rows="1" placeholder="Type your message..."></textarea>
+          <button id="send" class="send">Send</button>
+          <span class="hint">Shift+Enter for newline</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="spacer"></div>
+
+  <script>
+    const messagesEl = document.getElementById('messages');
+    const inputEl = document.getElementById('input');
+    const sendBtn = document.getElementById('send');
+
+    function addMsg(role, text){
+      const wrap = document.createElement('div');
+      wrap.className = `msg ${role}`;
+      wrap.innerText = text;
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      const now = new Date();
+      meta.textContent = (role === 'user' ? 'You • ' : 'Assistant • ') + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+      wrap.appendChild(meta);
+      messagesEl.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function showTyping(){
+      const holder = document.createElement('div');
+      holder.className = 'msg bot';
+      holder.setAttribute('id', 'typing');
+      holder.innerHTML = `
+        <div class="typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="meta">Assistant • typing…</div>`;
+      messagesEl.appendChild(holder);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function hideTyping(){
+      const t = document.getElementById('typing');
+      if(t) t.remove();
+    }
+
+    // Simple demo AI (replace with real API call)
+    async function fakeAIResponse(userText){
+      // Very light routing for demo
+      const t = userText.toLowerCase();
+      if(t.includes('job') || t.includes('work') || t.includes('role')){
+        return "You can explore inclusive roles on the **For Candidates** page. I can also help you tailor a CV in the CV Generator.";
+      }
+      if(t.includes('cv') || t.includes('resume')){
+        return "Open the **CV Generator** to upload a PDF, preview it, and export to PNG. Need help formatting? I can suggest sections.";
+      }
+      if(t.includes('access') || t.includes('screen') || t.includes('voice')){
+        return "We support real-time captions, text-to-speech, and keyboard navigation. Check **Assistive Services** for details.";
+      }
+      if(t.includes('contact')){
+        return "You can reach us at empowerwork@gmail or see the **Contact** page for more options.";
+      }
+      return "Got it! I’m here to help with jobs, accessibility tools, or navigating the site. What would you like to do next?";
+    }
+
+    // Hook for sending (replace with real backend later)
+    async function handleSend(){
+      const text = inputEl.value.trim();
+      if(!text) return;
+      addMsg('user', text);
+      inputEl.value = '';
+      showTyping();
+
+      // Simulate latency & get demo response
+      await new Promise(r => setTimeout(r, 700));
+      const answer = await fakeAIResponse(text);
+      hideTyping();
+      addMsg('bot', answer);
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    inputEl.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' && !e.shiftKey){
+        e.preventDefault();
+        handleSend();
+      }
+    });
+  </script>
+</body>
+</html>

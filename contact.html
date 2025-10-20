@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact • EmpowerWork</title>
+
+  <!-- Modern font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --brand:#0077b6;          /* logo blue */
+      --brand-dark:#023e8a;
+      --glass-bg:rgba(255,255,255,.08);
+      --glass-border:rgba(255,255,255,.18);
+      --text:#ffffff;
+      --muted:#cfe9ff;
+      --bg-overlay:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.35));
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:'Poppins',sans-serif;
+      color:var(--text);
+      min-height:100dvh;
+      background:url('contact_1.png') center/cover no-repeat fixed;
+      position:relative;
+    }
+    /* readability overlay */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background:var(--bg-overlay);
+      z-index:-1;
+    }
+
+    /* HEADER (hero style) */
+    header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter:saturate(140%) blur(8px);
+      background:rgba(0,0,0,.35);
+      border-bottom:1px solid rgba(255,255,255,.1);
+    }
+    .header-inner{
+      max-width:1100px; margin:auto;
+      display:flex; align-items:center; justify-content:center;
+      padding:18px 20px;
+    }
+    header h1{font-size:clamp(1.4rem, 1.2rem + 1.2vw, 2rem); font-weight:700; letter-spacing:.3px}
+
+    /* MAIN */
+    main{
+      max-width:1100px;
+      margin:40px auto 120px;
+      padding:0 20px;
+    }
+.back-home {
+  margin-left: 20px;
+  padding: 8px 16px;
+  background-color: #00b4d8;  /* primary blue */
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-home:hover {
+  background-color: #0077b6;   /* darker blue on hover */
+  transform: translateY(-2px);
+}
+
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:20px;
+    }
+    @media(min-width:800px){
+      .grid{grid-template-columns:1.1fr .9fr}
+    }
+
+    /* CARDS (glassmorphism) */
+    .card{
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .card-header{
+      padding:14px 18px;
+      background:linear-gradient(135deg, rgba(0,119,182,.18), rgba(2,62,138,.18));
+      border-bottom:1px solid rgba(255,255,255,.12);
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .card-body{
+      padding:18px;
+    }
+
+    .list{
+      list-style:none;
+      display:grid; gap:12px;
+    }
+    .item-label{color:var(--muted)}
+    .item-value{color:#e9f6ff}
+    .link{
+      color:var(--muted);
+      text-decoration:none;
+      transition:color .25s ease;
+    }
+    .link:hover{color:#ffffff}
+
+    /* SOCIAL LINKS */
+    .socials{
+      display:grid; gap:10px;
+    }
+    .socials a{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      text-decoration:none;
+      color:#e9f6ff;
+      transition:transform .2s ease, background .2s ease;
+    }
+    .socials a:hover{
+      transform:translateY(-3px);
+      background:rgba(255,255,255,.09);
+    }
+
+    /* FOOTER */
+    footer{
+      position:fixed; bottom:0; left:0; width:100%;
+      background:rgba(0,0,0,.35);
+      border-top:1px solid rgba(255,255,255,.1);
+      color:var(--muted);
+      text-align:center;
+      padding:10px 12px;
+      backdrop-filter:saturate(140%) blur(8px);
+    }
+    /* avoid footer overlap */
+    .page-spacer{height:80px}
+
+    
+
+   
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <h1>Contact Us</h1>
+      <a href="index.html" class="back-home">Home</a>
+
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="grid">
+
+      <!-- CONTACT INFO -->
+      <section class="card">
+        <div class="card-header">Contact Information</div>
+        <div class="card-body">
+          <ul class="list">
+            <li>
+              <div class="item-label">Contact Person</div>
+              <div class="item-value">Dr. Reem</div>
+            </li>
+            <li>
+              <div class="item-label">Phone</div>
+              <div class="item-value">+201091221840</div>
+            </li>
+            <li>
+              <div class="item-label">Email</div>
+              <div class="item-value">
+                <a class="link" href="mailto:empowerwork@gmail">empowerwork@gmail</a>
+              </div>
+            </li>
+            <li>
+              <div class="item-label">Address</div>
+              <div class="item-value">37 Gleem Street, Alexandria, Egypt</div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- SOCIAL -->
+      <section class="card">
+        <div class="card-header">Follow Us</div>
+        <div class="card-body">
+          <div class="socials">
+            <a href="mailto:empowerwork@gmail" aria-label="Email EmpowerWork">
+              <!-- simple mail icon -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6h16v12H4z" stroke="#cfe9ff" stroke-width="1.6" />
+                <path d="m4 7 8 6 8-6" stroke="#cfe9ff" stroke-width="1.6" />
+              </svg>
+              Email
+            </a>
+            <a href="#" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="#cfe9ff" stroke-width="1.6"/>
+                <path d="M8 12h8M12 8v8" stroke="#cfe9ff" stroke-width="1.6"/>
+              </svg>
+              Facebook
+            </a>
+            <a href="#" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="#cfe9ff" stroke-width="1.6"/>
+                <path d="M8 15c2-2 6-2 8 0M12 8.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" stroke="#cfe9ff" stroke-width="1.6"/>
+              </svg>
+              Instagram
+            </a>
+            <a href="#" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 18V6h16v12" stroke="#cfe9ff" stroke-width="1.6"/>
+                <path d="M4 9h16M8 6v12" stroke="#cfe9ff" stroke-width="1.6"/>
+              </svg>
+              Website
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="page-spacer"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2024 EmpowerWork. All rights reserved.</p>
+  </footer>
+
+ 
+  
+</body>
+</html>

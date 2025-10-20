@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV Generator • EmpowerWork</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- PDF.js (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" defer></script>
+  <script>
+    // point the worker to the same CDN version
+    window.addEventListener('DOMContentLoaded', () => {
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    });
+  </script>
+
+  <style>
+    :root{
+      --brand:#00b4d8;
+      --brand-dark:#0077b6;
+      --ink:#0f172a;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Poppins',sans-serif;
+      color:white; min-height:100dvh; position:relative;
+      background:url('cv_bg.png') center/cover no-repeat fixed;
+    }
+    body::before{
+      content:""; position:fixed; inset:0; z-index:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.45));
+    }
+
+    /* NAVBAR */
+    .navbar{
+      position:sticky; top:0; z-index:5;
+      background:rgba(0,0,0,.6);
+      backdrop-filter:saturate(140%) blur(8px);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 24px; border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .navbar a{
+      color:#00b4d8; text-decoration:none; font-weight:600; margin:0 12px;
+    }
+    .navbar a:hover{ color:#8be9ff }
+    .navbar img{ height:46px }
+
+    /* PAGE */
+    .wrap{
+      position:relative; z-index:1;
+      max-width:1100px; margin:32px auto 100px; padding:0 20px;
+    }
+    .hero{
+      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    }
+    .hero h1{ font-size:clamp(1.6rem, 1.2rem + 1.8vw, 2.4rem); font-weight:700 }
+    .hero p{ opacity:.95 }
+
+    /* PANEL */
+    .panel{
+      margin-top:18px;
+      display:grid; grid-template-columns:1fr 420px; gap:18px;
+    }
+    @media (max-width:950px){ .panel{ grid-template-columns:1fr } }
+
+    .card{
+      background:#ffffff;
+      color:var(--ink);
+      border:1px solid rgba(15,23,42,.08);
+      border-radius:16px; overflow:hidden;
+      box-shadow:0 12px 30px rgba(0,0,0,.28);
+    }
+    .card .head{
+      padding:14px 18px;
+      background:linear-gradient(135deg, rgba(0,180,216,.12), rgba(0,119,182,.12));
+      border-bottom:1px solid rgba(15,23,42,.08);
+      font-weight:700;
+    }
+    .card .body{ padding:18px }
+
+    /* UPLOAD */
+    .drop{
+      border:2px dashed rgba(15,23,42,.2);
+      border-radius:14px; padding:24px;
+      display:grid; gap:10px; place-items:center; text-align:center;
+      transition:border-color .25s ease, background .25s ease;
+    }
+    .drop.dragover{
+      border-color:var(--brand);
+      background:rgba(0,180,216,.06);
+    }
+    .choose{
+      display:inline-block; padding:10px 16px; border-radius:999px;
+      background:var(--brand); color:white; font-weight:600; text-decoration:none;
+      transition:background .25s ease, transform .2s ease;
+      cursor:pointer;
+    }
+    .choose:hover{ background:var(--brand-dark); transform:translateY(-2px) }
+
+    .meta{ color:#475569; font-size:.95rem }
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px }
+
+    .btn{
+      padding:10px 14px; border-radius:10px; border:1px solid rgba(15,23,42,.15);
+      background:#f8fafc; color:var(--ink); font-weight:600; cursor:pointer;
+      transition:transform .2s ease, background .2s ease;
+    }
+    .btn:hover{ background:#eef6ff; transform:translateY(-2px) }
+    .btn:disabled{ opacity:.6; cursor:not-allowed }
+
+    /* PREVIEW */
+    .preview-wrap{
+      display:grid; gap:12px;
+    }
+    .canvas-frame{
+      background:#0b1220; border-radius:12px; padding:10px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+    }
+    canvas{ width:100%; height:auto; display:block }
+
+    /* FOOTER PAD */
+    .spacer{height:80px}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <div class="navbar">
+    <div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="services.html">Services</a>
+    </div>
+    <img src="Logo.png" alt="EmpowerWork Logo">
+  </div>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <h1>CV Generator</h1>
+        <p>Upload a PDF CV to preview, and export the first page as an image.</p>
+      </div>
+      <a class="choose" href="#uploader">Get Started</a>
+    </section>
+
+    <section class="panel">
+      <!-- Upload + actions -->
+      <div class="card" id="uploader">
+        <div class="head">Upload your CV (PDF)</div>
+        <div class="body">
+          <div id="dropzone" class="drop" tabindex="0" aria-label="Upload CV by dragging a PDF here">
+            <div>
+              <strong>Drag & drop</strong> your PDF here
+              <div class="meta">or</div>
+            </div>
+            <label class="choose">
+              Browse files
+              <input id="fileInput" type="file" accept="application/pdf" hidden />
+            </label>
+            <div id="fileMeta" class="meta"></div>
+          </div>
+
+          <div class="actions">
+            <button id="renderBtn" class="btn" disabled>Render Preview</button>
+            <button id="exportBtn" class="btn" disabled>Export Preview as PNG</button>
+            <a id="downloadLink" class="btn" style="display:none" download="cv_preview.png">Download PNG</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview -->
+      <div class="card">
+        <div class="head">Preview</div>
+        <div class="body preview-wrap">
+          <div class="canvas-frame">
+            <canvas id="previewCanvas" aria-label="PDF first page preview"></canvas>
+          </div>
+          <div class="meta">Tip: use a high-quality PDF for the best export image.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="spacer"></div>
+
+  <script>
+    // Elements
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const fileMeta = document.getElementById('fileMeta');
+    const renderBtn = document.getElementById('renderBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const downloadLink = document.getElementById('downloadLink');
+    const canvas = document.getElementById('previewCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let file = null;          // selected file
+    let pdfDoc = null;        // pdf.js document
+    let currentPage = 1;      // we render first page
+
+    // Helpers
+    function humanSize(bytes){
+      const units = ['B','KB','MB','GB']; let i = 0;
+      while(bytes >= 1024 && i < units.length-1){ bytes/=1024; i++;}
+      return bytes.toFixed(1)+' '+units[i];
+    }
+
+    function setFile(f){
+      file = f;
+      if(!file){ fileMeta.textContent=''; renderBtn.disabled = true; exportBtn.disabled = true; return;}
+      fileMeta.textContent = `${file.name} • ${humanSize(file.size)}`;
+      renderBtn.disabled = false;
+      exportBtn.disabled = true;
+      downloadLink.style.display = 'none';
+    }
+
+    // Drag & drop
+    ['dragenter','dragover'].forEach(evt=>{
+      dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover'); });
+    });
+    ['dragleave','drop'].forEach(evt=>{
+      dropzone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover'); });
+    });
+    dropzone.addEventListener('drop', e=>{
+      const f = e.dataTransfer.files[0];
+      if(f && f.type === 'application/pdf'){ setFile(f); }
+      else alert('Please drop a PDF file.');
+    });
+    dropzone.addEventListener('click',()=> fileInput.click());
+    fileInput.addEventListener('change', e=> setFile(e.target.files[0]));
+
+    // Render first page
+    renderBtn.addEventListener('click', async ()=>{
+      if(!file) return;
+      const arrayBuf = await file.arrayBuffer();
+      pdfDoc = await pdfjsLib.getDocument({data: arrayBuf}).promise;
+      const page = await pdfDoc.getPage(currentPage);
+
+      // Scale for high-quality canvas
+      const viewport = page.getViewport({ scale: 1.5 });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      const renderContext = { canvasContext: ctx, viewport };
+      await page.render(renderContext).promise;
+
+      exportBtn.disabled = false;
+    });
+
+    // Export to PNG
+    exportBtn.addEventListener('click', ()=>{
+      const dataURL = canvas.toDataURL('image/png');
+      downloadLink.href = dataURL;
+      downloadLink.style.display = 'inline-block';
+      downloadLink.click();
+    });
+  </script>
+</body>
+</html>

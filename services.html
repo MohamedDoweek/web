@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore More • EmpowerWork</title>
+
+  <style>
+    :root{
+      --brand:#00b4d8;
+      --brand-dark:#0077b6;
+      --ink:#0f172a;
+      --muted:#475569;
+      --card:#ffffff;
+      --ring: rgba(0,180,216,.18);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:'Poppins',sans-serif;
+      background:url('disabled.png') center/cover no-repeat fixed;
+      min-height:100vh;
+      position:relative;
+    }
+    body::before{
+      content:""; position:fixed; inset:0; z-index:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.35));
+    }
+
+    /* NAVBAR */
+    .navbar{
+      position:sticky; top:0; z-index:10;
+      background:rgba(0,0,0,0.6);
+      backdrop-filter:saturate(140%) blur(8px);
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 30px;
+      border-bottom:1px solid rgba(255,255,255,0.1);
+    }
+    .navbar a{
+      color:var(--brand);
+      text-decoration:none;
+      font-weight:600;
+      margin:0 15px;
+      transition:color .25s ease;
+    }
+    .navbar a:hover{ color:#8be9ff }
+    .navbar img{
+      height:50px; border-radius:8px;
+    }
+
+    /* MAIN CONTENT */
+    .more-pages{
+      position:relative;
+      z-index:1;
+      max-width:1100px;
+      margin:40px auto 80px;
+      padding:0 20px;
+    }
+    .more-pages h2{
+      font:700 1.9rem/1.2 system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      margin-bottom:18px;
+      color:white;
+      text-align:center;
+    }
+
+    .grid{
+      display:grid;
+      gap:18px;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    }
+
+    .card{
+      position:relative;
+      isolation:isolate;
+      border-radius:16px;
+      padding:18px 18px 20px;
+      background:var(--card);
+      color:var(--ink);
+      border:1px solid rgba(15,23,42,.08);
+      box-shadow:0 10px 26px rgba(0,0,0,.18);
+      transform:translateY(10px);
+      opacity:0;
+      animation:fadeUp .55s ease forwards;
+      transition:transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    }
+    .card:nth-child(1){animation-delay:.05s}
+    .card:nth-child(2){animation-delay:.1s}
+    .card:nth-child(3){animation-delay:.15s}
+    .card:nth-child(4){animation-delay:.2s}
+    .card:nth-child(5){animation-delay:.25s}
+    .card:nth-child(6){animation-delay:.3s}
+    .card:nth-child(7){animation-delay:.35s}
+    .card:nth-child(8){animation-delay:.4s}
+
+    .card::before{
+      content:"";
+      position:absolute; inset:-1px; z-index:-1;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--brand),#6ee7ff,var(--brand-dark));
+      opacity:0;
+      transition:opacity .25s ease;
+      filter:blur(.6px);
+    }
+    .card:hover::before{opacity:1}
+    .card:hover{
+      transform:translateY(-8px) scale(1.01);
+      box-shadow:0 16px 40px rgba(0,0,0,.26);
+      border-color:rgba(0,119,182,.18);
+    }
+
+    .card .title{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:var(--brand-dark);
+      text-decoration:none;
+      font-weight:700;
+      font-size:1.05rem;
+    }
+    .card .title:focus-visible{
+      box-shadow:0 0 0 6px var(--ring);
+      border-radius:10px;
+    }
+    .arrow{
+      width:18px; height:18px;
+      transition:transform .2s ease;
+    }
+    .card:hover .arrow{ transform:translateX(4px) }
+
+    .card p{
+      color:var(--muted);
+      font-size:.95rem;
+      line-height:1.5;
+      margin-top:6px;
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      .card,.card::before,.arrow{transition:none;animation:none;transform:none;opacity:1}
+    }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <div>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="cv_gen.html">CV Generator</a>
+      <a href="chatbot.html">Chatbot</a>
+      <a href="ai-platform.html">AI Platform</a>
+      <a href="resources.html">Resources</a>
+    </div>
+    <img src="Logo.png" alt="EmpowerWork Logo">
+  </div>
+
+  <!-- CARDS SECTION -->
+  <section class="more-pages">
+    <h2>Explore More</h2>
+    <div class="grid">
+
+      <div class="card">
+        <a class="title" href="cv_gen.html">
+          CV Generator
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p>Generate professional CVs using AI. Upload, format, and export in seconds.</p>
+      </div>
+
+      <div class="card">
+        <a class="title" href="chatbot.html">
+          Chatbot
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p>Your assistant to navigate the site, discover roles, and get accessibility tips.</p>
+      </div>
+
+      <div class="card">
+        <a class="title" href="ai-platform.html">
+          Text ↔ Speech
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p>Read content aloud or dictate messages with integrated TTS/STT tools.</p>
+      </div>
+
+      <div class="card">
+        <a class="title" href="training.html">
+          Products
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p>Adaptive devices and software bundles to empower accessible work.</p>
+      </div>
+
+      <div class="card">
+        <a class="title" href="resources.html">
+          Accessibility Resources
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p>Guides, checklists, and tools to make offices and remote setups inclusive.</p>
+      </div>
+
+      <div class="card">
+        <a class="title" href="stories.html">
+          Success Stories
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p>Real journeys from candidates and employers building inclusive teams.</p>
+      </div>
+
+      <div class="card">
+        <a class="title" href="blog.html">
+          Blog & Research
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p>Trends in inclusive tech, policy updates, and data-driven insights.</p>
+      </div>
+
+      <div class="card">
+        <a class="title" href="support.html">
+          Help & FAQ
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p>Need assistance? Browse FAQs or contact support for quick answers.</p>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

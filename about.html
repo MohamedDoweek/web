@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Team • EmpowerWork</title>
+
+  <!-- Modern font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --brand:#0077b6;      /* your logo blue */
+      --brand-dark:#00b4d8; 
+      --glass-bg:rgba(255,255,255,.08);
+      --glass-border:rgba(255,255,255,.18);
+      --text:#ffffff;
+      --muted:#cfe9ff;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    body{
+      font-family:'Poppins',sans-serif;
+      color:var(--text);
+      min-height:100dvh;
+      background:url('office.png') center/cover no-repeat fixed;
+      position:relative;
+    }
+
+    /* soft dark overlay for readability */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.35));
+      z-index:-1;
+    }
+
+    /* NAVBAR */
+    nav{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter:saturate(140%) blur(8px);
+      background:rgba(0,0,0,.35);
+      border-bottom:1px solid rgba(255,255,255,.1);
+    }
+    .nav-inner{
+      max-width:1100px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 20px;
+    }
+    .brand{
+      font-weight:700;
+      letter-spacing:.3px;
+      color:var(--muted);
+    }
+    .links a{
+      color:var(--brand);
+      text-decoration:none;
+      margin-left:22px;
+      font-weight:600;
+      transition:color .25s ease;
+    }
+    .links a:hover{color:var(--brand-dark)}
+
+    /* PAGE HEADER */
+    .hero{
+      max-width:1100px;
+      margin:60px auto 20px;
+      padding:0 20px;
+      text-align:center;
+    }
+    .hero h1{
+      font-size:clamp(1.8rem, 2.6vw + 1rem, 3rem);
+      font-weight:700;
+      line-height:1.15;
+    }
+    .hero p{
+      margin-top:8px;
+      color:#e7f4ff;
+      opacity:.9;
+    }
+    .underline{
+      width:120px;height:4px;margin:18px auto 0;
+      background:linear-gradient(90deg,var(--brand), var(--brand-dark));
+      border-radius:999px;
+    }
+
+    /* GRID */
+    .grid{
+      max-width:1100px;
+      margin:28px auto 80px;
+      padding:0 20px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+      gap:20px;
+    }
+
+    /* CARD (glassmorphism) */
+    .card{
+      position:relative;
+      border-radius:16px;
+      background:var(--glass-bg);
+      border:1px solid var(--glass-border);
+      box-shadow:0 10px 30px rgba(0,0,0,.22);
+      overflow:hidden;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 14px 40px rgba(0,0,0,.3);
+    }
+
+    .card-header{
+      height:78px;
+      background:linear-gradient(135deg, rgba(0,119,182,.18), rgba(2,62,138,.18));
+    }
+
+    .card-body{
+      padding:18px;
+      display:grid;
+      grid-template-columns:64px 1fr;
+      align-items:center;
+      gap:14px;
+    }
+
+    /* Avatar with initials */
+    .avatar{
+      width:64px;height:64px;border-radius:50%;
+      display:grid;place-items:center;
+      font-weight:700;
+      background:radial-gradient(120px 120px at 30% 20%, rgba(255,255,255,.25), transparent 60%),
+                 linear-gradient(135deg, var(--brand), var(--brand-dark));
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,.25);
+    }
+    .avatar::after{
+      content:attr(data-initials);
+      color:white;
+    }
+
+    .name{font-size:1.1rem;font-weight:700}
+    .id{font-size:.95rem;color:var(--muted)}
+
+    /* subtle footer for spacing on mobile keyboard */
+    .spacer{height:16px}
+
+    @media (prefers-reduced-motion:reduce){
+      .card,.links a{transition:none}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="brand">EmpowerWork</div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="hero">
+    <h1>Team Members</h1>
+    <div class="underline"></div>
+    <p>People behind the mission of inclusion & opportunity.</p>
+  </header>
+
+  <!-- GRID OF CARDS -->
+  <main class="grid">
+    <article class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="avatar" data-initials="RF"></div>
+        <div>
+          <div class="name">Rawan Farouk</div>
+          <div class="id">ID: 2205082</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="avatar" data-initials="KG"></div>
+        <div>
+          <div class="name">Khaled Ghalwash</div>
+          <div class="id">ID: 2205018</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="avatar" data-initials="MH"></div>
+        <div>
+          <div class="name">Mohamed Hassan</div>
+          <div class="id">ID: 2205212</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="avatar" data-initials="MG"></div>
+        <div>
+          <div class="name">Mohamed Gamal</div>
+          <div class="id">ID: 2205131</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="avatar" data-initials="NE"></div>
+        <div>
+          <div class="name">Nadeen Ehab</div>
+          <div class="id">ID: 2205081</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <div class="avatar" data-initials="MH"></div>
+        <div>
+          <div class="name">Mazen Hossam</div>
+          <div class="id">ID: 2205041</div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <div class="spacer"></div>
+</body>
+</html>
